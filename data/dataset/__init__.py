@@ -1,0 +1,1 @@
+from .CIFAR100 import *
