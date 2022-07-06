@@ -1,7 +1,6 @@
 a = 8888
 dataprovider = dict(
 
-        
         type = "CIFAR100",
         batch_size = 64,
         shuffle = True,
