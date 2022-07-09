@@ -255,7 +255,7 @@ class EXP_Classification:
                 end_time = time.time()
                 if get_rank()==0:
                     self.logger.info(
-                        "Epoch [{epoch}/{max_epoch}], Step [{step}/{iter_num}], Loss: {loss:.4f}, lr: {lr:.4f}, time: {time}\n".format(
+                        "Epoch [{epoch}/{max_epoch}], Step [{step}/{iter_num}], Loss: {loss:.7f}, lr: {lr:.7f}, time: {time}\n".format(
                             epoch=epoch,
                             max_epoch=self.epoch,
                             step=step+1,

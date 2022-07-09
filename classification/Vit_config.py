@@ -4,7 +4,7 @@ use_wandb = False
 
 
 batch_size = 128
-epoch = 5
+epoch = 100
 mode = "train"
 img_size = 32
 patch_size = 8
