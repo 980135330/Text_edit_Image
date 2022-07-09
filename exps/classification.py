@@ -264,8 +264,17 @@ class EXP_Classification:
                             lr=self.optimizer.param_groups[0]['lr'],
                             time=end_time - start_time)
                             )
+
+            # epoch结束后计算它在训练集上的准确率
+            if local_rank==0:
+                self.logger.info(
+                    "Epoch [{epoch}/{max_epoch}], train_top1_acc [{top1_acc}], train_top5_acc [{top5_acc}] \n".format(
+                        epoch=epoch,
+                        max_epoch=self.epoch,
+                        top1_acc=top1_acc/len(self.dataprovider.dataset),
+                    ))          
+
             # 在对应的epoch结束后，保存checkpoint
-            
             if epoch % self.checkpoint_freq == 0:
                 # 只让一个GPU保存
                 if get_rank() == 0:
