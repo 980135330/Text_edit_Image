@@ -50,6 +50,7 @@ exp = dict(
             dict(
                 #root='/content/drive/MyDrive/Colab Notebooks/Basic Network/my_code/data/',
                 root='../dataset/',
+                download=True,
                 train=True),
             type='CIFAR100_train',
         ),
