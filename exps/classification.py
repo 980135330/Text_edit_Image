@@ -20,6 +20,11 @@ from torch.distributed import get_rank
 from torch.nn.parallel import DistributedDataParallel
 from utils import init_dist
 
+def reduce_tenosr(tensor):
+        tensor = tensor.clone()
+        torch.distributed.all_reduce(tensor, op=torch.distributed.ReduceOp.SUM)
+        
+        return tensor
 
 @EXPS.register_module()
 class EXP_Classification:
@@ -125,6 +130,8 @@ class EXP_Classification:
                 'warmup_scheduler': self.lr_scheduler.state_dict(),
             }, os.path.join(self.checkpoint_path, "epoch_{}.pth".format(epoch)))
 
+    # 同步多机训练数据，这里用来累加数据
+
     # def build_parallel_model(self):
     # 多机训练初始化模型
     # device = torch.device("cuda",get_rank())
@@ -214,7 +221,7 @@ class EXP_Classification:
 
             print("Resume_Epoch", self.resume_epoch)
 
-
+        top1_acc = 0.0
         # 模型训练过程
         for epoch in range(1,self.epoch+1):
             
@@ -241,6 +248,9 @@ class EXP_Classification:
                 loss.backward()
                 self.optimizer.step()
                 self.lr_scheduler.step()
+
+                _, top1_preds = output.max(1)
+                top1_acc += reduce_tenosr(top1_preds.eq(label).sum()).item()
 
                 end_time = time.time()
                 if get_rank()==0:
