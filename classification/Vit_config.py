@@ -12,6 +12,10 @@ embed_dim = 768
 num_worker = 8
 num_class = 100
 
+# lr和warmup_lr的比例
+lr = 1e-4
+warm = 0.2
+
 # 是否使用多机训练
 dist = True
 
@@ -87,11 +91,11 @@ exp = dict(
                    )),
     optimizer_cfg=dict(
         type="Adam",
-        lr=0.001,
+        lr=lr,
     ),
     lr_scheduler_cfg=dict(
         type="Cos_LR_Scheduler",
-        warm=0.2,
+        warm=warm,
     ),
     loss_cfg=dict(type="CrossEntropyLoss", ),
 
