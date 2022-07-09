@@ -1,4 +1,4 @@
-work_dir = "/home/chenghua.zhou/shiyan/Text2Img/classification/"
+work_dir = "./"
 
 use_wandb = False
 
@@ -22,7 +22,7 @@ resume_from = work_dir + "checkpoint/epoch_3.pth"
 init_model_from = None
 
 # 储存checkpoint的频率
-checkpoint_freq = 3
+checkpoint_freq = 10
 
 
 
@@ -49,7 +49,7 @@ exp = dict(
         dataset=dict(
             dict(
                 #root='/content/drive/MyDrive/Colab Notebooks/Basic Network/my_code/data/',
-                root='/home/chenghua.zhou/shiyan/Text2Img/DataSet/data/',
+                root='../dataset/',
                 train=True),
             type='CIFAR100_train',
         ),
@@ -99,7 +99,7 @@ exp = dict(
                     ),
 
     logger_cfg = dict(
-        filename="log1.txt",
+        filename="log.txt",
         format='%(asctime)s - %(message)s',
         filemode='w',
     ),
