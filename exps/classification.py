@@ -221,7 +221,7 @@ class EXP_Classification:
 
             print("Resume_Epoch", self.resume_epoch)
 
-        top1_acc = 0.0
+        
         # 模型训练过程
         for epoch in range(1,self.epoch+1):
             
@@ -229,6 +229,8 @@ class EXP_Classification:
             if epoch<= self.resume_epoch:
                 continue
 
+            top1_acc = 0.0
+            
             for step,(data,label) in enumerate(self.dataprovider):
                 start_time = time.time()
                 if self.use_GPU:

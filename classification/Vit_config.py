@@ -3,8 +3,8 @@ work_dir = "./"
 use_wandb = False
 
 
-batch_size = 128
-epoch = 100
+batch_size = 64
+epoch = 200
 mode = "train"
 img_size = 32
 patch_size = 8
