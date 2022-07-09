@@ -15,10 +15,10 @@ num_class = 100
 # 是否使用多机训练
 dist = True
 
-# 恢复训练和模型初始化设置
-resume_from = work_dir + "checkpoint/epoch_3.pth"
+# 恢复训练和模型初始化设置,如果不为None则读取模型
+#resume_from = work_dir + "checkpoint/epoch_3.pth"
 # resume_from = "/home/chenghua.zhou/shiyan/Text2Img/classification/checkpoint/epoch_3.pth"
-#resume_from = None
+resume_from = None
 init_model_from = None
 
 # 储存checkpoint的频率
