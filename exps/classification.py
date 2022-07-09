@@ -243,17 +243,17 @@ class EXP_Classification:
                 self.lr_scheduler.step()
 
                 end_time = time.time()
-
-                self.logger.info(
-                    "Epoch [{epoch}/{max_epoch}], Step [{step}/{iter_num}], Loss: {loss:.4f}, lr: {lr:.4f}, time: {time}\n".format(
-                        epoch=epoch,
-                        max_epoch=self.epoch,
-                        step=step+1,
-                        iter_num=len(self.dataprovider),
-                        loss=loss.item(),
-                        lr=self.optimizer.param_groups[0]['lr'],
-                        time=end_time - start_time)
-                        )
+                if get_rank()==0:
+                    self.logger.info(
+                        "Epoch [{epoch}/{max_epoch}], Step [{step}/{iter_num}], Loss: {loss:.4f}, lr: {lr:.4f}, time: {time}\n".format(
+                            epoch=epoch,
+                            max_epoch=self.epoch,
+                            step=step+1,
+                            iter_num=len(self.dataprovider),
+                            loss=loss.item(),
+                            lr=self.optimizer.param_groups[0]['lr'],
+                            time=end_time - start_time)
+                            )
             # 在对应的epoch结束后，保存checkpoint
             
             if epoch % self.checkpoint_freq == 0:
