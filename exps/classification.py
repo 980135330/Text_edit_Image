@@ -268,7 +268,7 @@ class EXP_Classification:
             # epoch结束后计算它在训练集上的准确率
             if local_rank==0:
                 self.logger.info(
-                    "Epoch [{epoch}/{max_epoch}], train_top1_acc [{top1_acc}], train_top5_acc [{top5_acc}] \n".format(
+                    "Epoch [{epoch}/{max_epoch}], train_top1_acc [{top1_acc}] ] \n".format(
                         epoch=epoch,
                         max_epoch=self.epoch,
                         top1_acc=top1_acc/len(self.dataprovider.dataset),
