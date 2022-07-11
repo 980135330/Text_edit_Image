@@ -2,7 +2,7 @@
 from .builder import ( DATAPROVIDER, DATASET, PIPLINE,
                        build_dataset)
 from torch.utils.data import DataLoader
-from .pipline import PiplineDataSet
+from .pipline import PiplineDataSet,GenerationPiplineDataSet
 from torch.distributed import get_rank, get_world_size
 
 import sys 
@@ -41,7 +41,7 @@ class TGIF:
         dataset = build_dataset(self.dataset)
         if self.piplines:
 
-            dataset = PiplineDataSet(dataset,self.piplines,self.dist)
+            dataset = GeneratonPiplineDataSet(dataset,self.piplines,self.dist)
             
         sampler = None
         if self.dist:
