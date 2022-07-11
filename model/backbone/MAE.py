@@ -69,10 +69,12 @@ class MAE_decoder(nn.Module):
 
 
         # clip encoder 抽取文本特征
-        print("*"*20)
-        print(x.shape)
+        b,n,d = x.shape
+        #  先去掉中中间的维度,过clip抽取特征
+        x = x.view(b,-1)
         x = self.text_encoder(x)
-
+        # 恢复原本的形状，第二维增加维度，变为 bx1xd
+        x = x.unsqueeze(1)
 
         # 直接将预处理后的图片展开为BxNxC形式 作为q
         image = image.view(image.shape[0], self.num_tokens, -1)
