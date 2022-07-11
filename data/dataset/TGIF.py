@@ -35,9 +35,9 @@ class TGIFDataSet(Dataset):
         
         frames = ImageSequence.all_frames(gif)
         
-        img = frames[0]
+        img = frames[0].convert("RGB")
         gt_idx = np.random.randint(int(len(frames)*0.7),len(frames))
-        img_gt = frames[gt_idx]
+        img_gt = frames[gt_idx].convert("RGB")
         
         return  caption,img,img_gt
         
