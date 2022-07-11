@@ -1,3 +1,4 @@
+from matplotlib import image
 import torch.nn as nn
 work_dir = "./"
 
@@ -10,8 +11,8 @@ mode = "train"
 img_size = 224
 patch_size = 16
 embed_dim = 768
-num_worker = 8
-
+num_worker = 16
+seq_len=(img_size//patch_size)**2
 # lr和warmup_lr的比例
 lr = 1e-4
 warm = 0.2
@@ -66,8 +67,8 @@ exp = dict(
     model_cfg=dict(type="MAE_IMAGE_EDIT",
                     backbone_cfg=dict(
                         type="MAE_decoder",
-                        dim=768,
-                        seq_len=196,
+                        dim=embed_dim,
+                        seq_len=seq_len,
                         num_heads=8,
                         dim_head=64,
                         depth=12,
@@ -79,9 +80,9 @@ exp = dict(
                     ),
                     lc_head_cfg=dict(
                         type="Pixel_head",
-                        in_channels=768, 
-                        out_channels=768, 
-                        image_size=224
+                        in_channels=embed_dim,
+                        out_channels=(patch_size**2)*3, 
+                        image_size=img_size,
                     )),
     optimizer_cfg=dict(
         type="Adam",
