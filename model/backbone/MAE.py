@@ -62,9 +62,7 @@ class MAE_decoder(nn.Module):
 
     def forward(self, x, image):
 
-        # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播
-        # 现在的策略暂时不需要对位置编码
-        # x = x + self.pos_embed
+
 
 
         # clip encoder 抽取文本特征
@@ -78,6 +76,9 @@ class MAE_decoder(nn.Module):
 
         # 直接将预处理后的图片展开为BxNxC形式 作为q
         image = image.view(image.shape[0], self.num_tokens, -1)
+        # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播
+       
+        x = x + self.pos_embed
 
         # 过block,kv都设置为image_gt
     
