@@ -57,10 +57,10 @@ exp = dict(
                 #root='/content/drive/MyDrive/Colab Notebooks/Basic Network/my_code/data/',
             data_json_path = "/mnt/datasets/tgif/train_data.json",
             type='TGIFDataSet',
-        ),
+        )),
         # 数据要使用的预处理
         piplines=[dict(type="RandomCrop",crop_size=img_size),dict(type="Normal")],
-    )),
+    ),
 
     # 模型设置
     model_cfg=dict(type="MAE_IMAGE_EDIT",
