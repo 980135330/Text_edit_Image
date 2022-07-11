@@ -59,7 +59,7 @@ exp = dict(
             type='TGIFDataSet',
         )),
         # 数据要使用的预处理
-        piplines=[dict(type="RandomCrop",crop_size=img_size),dict(type="Normal")],
+        piplines=[dict(type="Resize",resize_size=img_size),dict(type="Normal")],
     ),
 
     # 模型设置
