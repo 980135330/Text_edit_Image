@@ -24,9 +24,10 @@ class TGIFDataSet(Dataset):
         return self.data_len 
     
     def __getitem__(self,idx):
+        
         gif_path = self.data_path + self.data_list[idx][2:]
         
-        caption = self.data_dict[gif_path]
+        caption = self.data_dict[self.data_list[idx]]
 
         # 在数据集时直接对caption进行tokenizer
         caption = clip.tokenize(caption)
