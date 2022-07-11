@@ -4,9 +4,12 @@ import os
 import clip
 import numpy as np
 import torch
-from PIL import Image, ImageSequence
+from PIL import Image, ImageSequence,ImageFile
 from torch.utils.data import DataLoader, Dataset
 from ..builder import DATASET
+
+#避免读取图片时的报错
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 @DATASET.register_module()
