@@ -53,8 +53,7 @@ class MAE_decoder(nn.Module):
         self.norm = norm_layer(dim)
 
         # 使用clip 的 tokenizer 和 encoder 提取text特征
-        self.text_token_model,_ =  clip.load("ViT-L/14")
-        self.text_encoder = self.text_token_model.encode_text
+        self.text_encoder = clip.load("ViT-L/14")[0].encode_text
 
 
 

@@ -1,5 +1,6 @@
 import os
 import sys
+from numpy import NaN
 
 import torch
 from data import dataprovider
@@ -254,6 +255,7 @@ class EXP_MAE_edit:
                 loss.backward()
                 self.optimizer.step()
                 self.lr_scheduler.step()
+                
 
 
                 end_time = time.time()
