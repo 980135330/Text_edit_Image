@@ -69,6 +69,8 @@ class MAE_decoder(nn.Module):
 
 
         # clip encoder 抽取文本特征
+        print("*"*20)
+        print(x.shape)
         x = self.text_encoder(x)
 
 
