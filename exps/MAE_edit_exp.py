@@ -255,7 +255,8 @@ class EXP_MAE_edit:
 
 
                 end_time = time.time()
-                if get_rank()==0:
+
+                if not self.dist or get_rank()==0:
                     self.logger.info(
                         "Epoch [{epoch}/{max_epoch}], Step [{step}/{iter_num}], Loss: {loss:.7f}, lr: {lr:.7f}, time: {time}\n".format(
                             epoch=epoch,
@@ -272,7 +273,7 @@ class EXP_MAE_edit:
             # 在对应的epoch结束后，保存checkpoint
             if epoch % self.checkpoint_freq == 0:
                 # 只让一个GPU保存
-                if get_rank() == 0:
+                if not self.dist or get_rank() == 0:
                     self.save_checkpoint(epoch)
 
 
