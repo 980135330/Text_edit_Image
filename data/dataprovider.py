@@ -2,7 +2,7 @@
 from .builder import ( DATAPROVIDER, DATASET, PIPLINE,
                        build_dataset)
 from torch.utils.data import DataLoader
-from .pipline import PiplineDataSet,GenerationPiplineDataSet
+from .pipline import PiplineDataSet,GeneratonPiplineDataSet
 from torch.distributed import get_rank, get_world_size
 
 import sys 
