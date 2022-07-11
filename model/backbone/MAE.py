@@ -206,6 +206,8 @@ class CrossAttention(nn.Module):
 
         # qkv 统一投影到 inner_dim
         q = self.to_q(q)
+        print("*"*20)
+        print(k.shape)
         k = self.to_k(k)
         v = self.to_v(v)
 
