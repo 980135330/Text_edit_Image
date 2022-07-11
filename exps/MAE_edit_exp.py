@@ -19,6 +19,8 @@ from optimizer import build_optimizer
 from torch.distributed import get_rank
 from torch.nn.parallel import DistributedDataParallel
 from utils import init_dist
+import ipdb
+
 
 def reduce_tenosr(tensor):
         tensor = tensor.clone()
@@ -251,6 +253,9 @@ class EXP_MAE_edit:
                 print("*"*20)
                 print(output.shape)
                 print(image.shape)
+
+
+                ipdb.set_trace()
 
                 loss = self.loss(output,image_gt)
                 loss.backward()
