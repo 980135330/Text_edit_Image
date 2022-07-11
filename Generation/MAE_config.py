@@ -6,11 +6,16 @@ use_wandb = False
 
 
 batch_size = 64
-epoch = 50
+epoch = 100
 mode = "train"
+# MAE transformer 设置
 img_size = 224
-patch_size = 16
-embed_dim = 768
+embed_dim = 1024
+patch_size = 8
+num_heads=16,
+dim_head=embed_dim//num_heads,
+depth=24,
+
 num_worker = 16
 seq_len=(img_size//patch_size)**2
 # lr和warmup_lr的比例
@@ -69,9 +74,9 @@ exp = dict(
                         type="MAE_decoder",
                         dim=embed_dim,
                         seq_len=seq_len,
-                        num_heads=8,
-                        dim_head=64,
-                        depth=12,
+                        num_heads=num_heads,
+                        dim_head=dim_head,
+                        depth=depth,
                         qk_scale=None,
                         act_layer=nn.GELU,
                         norm_layer=nn.LayerNorm,
