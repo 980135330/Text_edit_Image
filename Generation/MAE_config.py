@@ -12,9 +12,9 @@ mode = "train"
 img_size = 224
 embed_dim = 1024
 patch_size = 8
-num_heads=16,
-dim_head=embed_dim//num_heads,
-depth=24,
+num_heads=16
+dim_head=embed_dim//num_heads
+depth=24
 
 num_worker = 16
 seq_len=(img_size//patch_size)**2
