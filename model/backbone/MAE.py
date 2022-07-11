@@ -70,7 +70,7 @@ class MAE_decoder(nn.Module):
 
 
         # clip encoder 抽取文本特征
-        x = self.tokenizer(x)
+        x = self.tokenizer(x).cuda()
         x = self.text_encoder(x)
 
 
