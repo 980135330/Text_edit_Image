@@ -55,7 +55,7 @@ exp = dict(
         dataset=dict(
             dict(
                 #root='/content/drive/MyDrive/Colab Notebooks/Basic Network/my_code/data/',
-            data_json_path = "/mnt/datasets/tgif/train_data.json",
+            data_json_path = "/mnt/datasets/tgif/",
             type='TGIFDataSet',
         )),
         # 数据要使用的预处理

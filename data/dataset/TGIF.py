@@ -13,8 +13,8 @@ from ..builder import DATASET
 class TGIFDataSet(Dataset):
     def __init__(self,data_json_path=None):
         assert data_json_path is not None
-        
-        with open(data_json_path,'r') as file:
+        self.data_path = data_json_path
+        with open(data_json_path+"train_data.json",'r') as file:
             content = file.read()
         self.data_dict = data_dict = json.loads(content)
         self.data_list = list(data_dict.keys())
@@ -24,7 +24,7 @@ class TGIFDataSet(Dataset):
         return self.data_len 
     
     def __getitem__(self,idx):
-        gif_path = self.data_list[idx]
+        gif_path = self.data_path + self.data_list[idx][2:]
         
         caption = self.data_dict[gif_path]
 
