@@ -27,6 +27,17 @@ class PiplineDataSet(Dataset):
 
 # 不同的pipline操作，对数据进行预处理
 @PIPLINE.register_module()
+class RandomCrop:
+    def __init__(self,crop_size=None):
+        assert crop_size is not None
+        self.tf = transforms.Compose([
+            transforms.RandomCrop(crop_size),
+        ])
+    def __call__(self,data):
+
+        return self.tf(data)
+
+@PIPLINE.register_module()
 class Normal:
 
     def __init__(self):

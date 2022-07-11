@@ -54,7 +54,6 @@ class MAE_decoder(nn.Module):
 
         # 使用clip 的 tokenizer 和 encoder 提取text特征
         self.text_token_model,_ =  clip.load("ViT-L/14")
-        self.tokenizer = clip.tokenize
         self.text_encoder = self.text_token_model.encode_text
 
 
@@ -70,7 +69,6 @@ class MAE_decoder(nn.Module):
 
 
         # clip encoder 抽取文本特征
-        x = self.tokenizer(x).cuda()
         x = self.text_encoder(x)
 
 
