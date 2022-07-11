@@ -54,6 +54,7 @@ class MAE_decoder(nn.Module):
 
         # 使用clip 的 tokenizer 和 encoder 提取text特征
         self.text_encoder = clip.load("ViT-L/14")[0].encode_text
+        self.proj_text = nn.Linear(768, dim)
 
 
 
@@ -73,12 +74,14 @@ class MAE_decoder(nn.Module):
         # 恢复原本的形状，第二维增加维度，变为 bx1xd
         # 由于clip抽出的特征是float16,所以要先.float()转换成32位
         x = x.unsqueeze(1).float()
+        # 统一投影到dim维度
+        x = self.proj_text(x)
 
         # 直接将预处理后的图片展开为BxNxC形式 作为q
         image = image.view(image.shape[0], self.num_tokens, -1)
         # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播
        
-        x = x + self.pos_embed
+        image = image + self.pos_embed
 
         # 过block,kv都设置为image_gt
     
