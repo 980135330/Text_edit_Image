@@ -43,8 +43,6 @@ class GeneratonPiplineDataSet(Dataset):
         # 遍历每个pipline，分别初始化对数据预处理的单元对数据进行操作
         for pipline_cfg in self.piplines:
             each = build_pipline(pipline_cfg)
-            print("*"*20)
-            print(img.shape)
             img = each(img)
             img_gt = each(img_gt)
 
