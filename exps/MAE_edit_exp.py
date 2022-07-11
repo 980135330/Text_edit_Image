@@ -248,6 +248,10 @@ class EXP_MAE_edit:
 
                 output = self.model(text,image)
 
+                print("*"*20)
+                print(output.shape)
+                print(image.shape)
+
                 loss = self.loss(output,image_gt)
                 loss.backward()
                 self.optimizer.step()
