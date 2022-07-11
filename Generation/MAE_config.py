@@ -5,7 +5,7 @@ work_dir = "./"
 use_wandb = False
 
 
-batch_size = 64
+batch_size = 16
 epoch = 100
 mode = "train"
 # MAE transformer 设置
