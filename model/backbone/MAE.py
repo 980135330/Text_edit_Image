@@ -74,7 +74,8 @@ class MAE_decoder(nn.Module):
         x = x.view(b,-1)
         x = self.text_encoder(x)
         # 恢复原本的形状，第二维增加维度，变为 bx1xd
-        x = x.unsqueeze(1)
+        # 由于clip抽出的特征是float16,所以要先.float()转换成32位
+        x = x.unsqueeze(1).float()
 
         # 直接将预处理后的图片展开为BxNxC形式 作为q
         image = image.view(image.shape[0], self.num_tokens, -1)
