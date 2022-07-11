@@ -53,7 +53,7 @@ class Attention(nn.Module):
         qkv = self.to_qkv(x).chunk(3, dim = -1)
         q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h = h), qkv)
 
-    
+
 
         q = q * self.scale
 
@@ -86,6 +86,79 @@ class Attention(nn.Module):
         out = rearrange(out, 'b h n d -> b n (h d)')
         out =  self.to_out(out)
         return out
+
+#  cross attention  该模块用于测试图文cross attention的效果、
+#  kv 为原图片，q为文字
+@ATTENTION.register_module()
+class CrossAttention(nn.Module):
+    def __init__(self,
+                 dim=768,
+                 seq_len=196,
+                 causal=True,
+                 heads=8,
+                 dim_head=64,
+                 attn_dropout_ratio=0.,
+                 proj_dropout_ratio=0.,
+                 stable=False,
+                 qk_scale=None,
+                 static_mask=None):
+        super().__init__()
+        # qkv 的 dim
+        inner_dim = dim_head *  heads
+
+        self.heads = heads
+        self.seq_len = seq_len
+
+        # qk 计算的scale 值，若为Nne则使用dim_head计算出的scale
+        self.scale = dim_head ** -0.5 if not qk_scale else qk_scale
+
+        self.stable = stable
+        self.causal = causal
+        self.register_buffer('static_mask', static_mask, persistent=False)
+
+        # qkv 的投影层
+        self.to_q = nn.Linear(dim, inner_dim, bias=False)
+        self.to_k = nn.Linear(dim, inner_dim, bias=False)
+        self.to_v = nn.Linear(dim, inner_dim, bias=False)
+
+
+        # 输出层投影
+        self.proj = nn.Linear(inner_dim, dim, bias=False)
+
+        # drop out 设置
+        self.attn_dropout = nn.Dropout(attn_dropout_ratio)
+        self.proj_dropout = nn.Dropout(proj_dropout_ratio)
+
+    def forward(self,q,k,v):
+        b,n,c = q.shape[0],q.shape[1],q.shape[2]
+
+        # qkv 统一投影到 inner_dim
+        q = self.to_q(q) 
+        k = self.to_k(k)
+        v = self.to_v(v)
+
+        # qk attn 操作,得到注意力矩阵
+        attn = (q@k.transpose(-2,-1))/self.scale
+        # 对 attn 进行 softmax,这里不需要进行mask操作
+        attn = attn.softmax(dim=-1)
+
+        # 对 attn 进行 dropout
+        attn = self.attn_dropout(attn)
+
+        x = attn@v
+        x = self.proj(x)
+
+        # proj 进行drop out
+        x = self.proj_dropout(x)
+
+
+        return x 
+
+
+
+
+
+
 
 
 

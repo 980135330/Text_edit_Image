@@ -1,2 +1,2 @@
-from  attention  import *
+from  .attention import *
 
