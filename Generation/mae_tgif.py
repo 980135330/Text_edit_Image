@@ -25,6 +25,11 @@ if __name__ == '__main__':
                         default=None,
                         help='number of workers')
 
+    parser.add_argument('-dist',
+                        action='store_true',
+                        default=False,
+                        help='use dist or not')
+
     parser.add_argument('--local_rank',
                         type=int,
                         default=None,
@@ -58,8 +63,11 @@ if __name__ == '__main__':
                         help='experiment name')
 
     args = parser.parse_args()
-
+    # 通过 arg调整是否使用多卡训练
+    cfg.dist = args.dist
+                                
     exp = build_exps(cfg.exp)
+    
     exp.run()
 
     
