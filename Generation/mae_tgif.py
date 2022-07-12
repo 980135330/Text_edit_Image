@@ -24,6 +24,11 @@ if __name__ == '__main__':
                         type=int,
                         default=None,
                         help='number of workers')
+
+    parser.add_argument('-local_rank',
+                        type=int,
+                        default=None,
+                        help='local rank')
     parser.add_argument('-lr',
                         type=float,
                         default=None,
