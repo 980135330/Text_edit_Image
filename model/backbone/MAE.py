@@ -9,11 +9,12 @@ import torch.nn as nn
 from ..builder import BACKBONE
 
 import clip
-
+import ipdb
 # 使用MAE的decoder的思想，尝试利用cross attention 解决图片编辑问题
 @BACKBONE.register_module()
 class MAE_decoder(nn.Module):
     def __init__(self, 
+                    in_channels=3,
                     dim=768,
                     patch_size=16,
                     seq_len=196,
@@ -59,7 +60,10 @@ class MAE_decoder(nn.Module):
         self.proj_text = nn.Linear(768, dim)
         # patch_size*patch_size*3 为一个patch 按 RGB通道的展开 
         self.proj_image = nn.Linear(patch_size*patch_size*3, dim)
-
+        self.proj_image = nn.Conv2d(in_channels,
+                                    dim,
+                                    kernel_size=patch_size,
+                                    stride=patch_size)
 
 
 
@@ -81,10 +85,16 @@ class MAE_decoder(nn.Module):
         # 统一投影到dim维度
         x = self.proj_text(x)
 
-        # 直接将预处理后的图片展开为BxNxC形式 作为q
+        # 对img进行patch处理变为token
         
-        image = image.view(image.shape[0], self.num_tokens, -1)
-        # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播        
+        image = self.proj_image(image)
+
+        # flatten: [B, C, H, W] -> [B, C, HW]
+        # transpose: [B, C, HW] -> [B, HW, C]
+        image = image.flatten(2).transpose(1, 2)
+        # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播  
+        ipdb.set_trace()
+
         image = image + self.pos_embed
 
         # 过block,kv都设置为image_gt
