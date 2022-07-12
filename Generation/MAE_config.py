@@ -5,7 +5,7 @@ work_dir = "./"
 use_wandb = False
 
 
-batch_size = 32
+batch_size = 16
 epoch = 10
 mode = "train"
 # MAE transformer 设置
@@ -14,7 +14,7 @@ embed_dim = 1024
 patch_size = 8
 num_heads=16
 dim_head=embed_dim//num_heads
-depth=24
+depth=32
 
 num_worker = 16
 
