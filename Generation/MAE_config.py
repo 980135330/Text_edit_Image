@@ -6,7 +6,7 @@ use_wandb = False
 
 
 batch_size = 16
-epoch = 100
+epoch = 50
 mode = "train"
 # MAE transformer 设置
 img_size = 224
@@ -24,7 +24,7 @@ lr = 1e-4
 warm = 0.2
 
 # 是否使用多机训练
-dist = False
+dist = True
 
 # 恢复训练和模型初始化设置,如果不为None则读取模型
 #resume_from = work_dir + "checkpoint/epoch_3.pth"
@@ -33,7 +33,7 @@ resume_from = None
 init_model_from = None
 
 # 储存checkpoint的频率
-checkpoint_freq = 10
+checkpoint_freq = 5
 
 
 
@@ -73,6 +73,7 @@ exp = dict(
     model_cfg=dict(type="MAE_IMAGE_EDIT",
                     backbone_cfg=dict(
                         type="MAE_decoder",
+                        in_channels=3,
                         dim=embed_dim,
                         seq_len=seq_len,
                         patch_size=patch_size,
