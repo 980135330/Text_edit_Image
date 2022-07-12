@@ -174,10 +174,7 @@ class EXP_MAE_edit:
         # 先释放显存
         torch.cuda.empty_cache()
 
-        # 检查check_point 若不存在，则创建checkpoint 文件夹
-        if not self.dist or get_rank()==0:
-            if not os.path.exists(self.checkpoint_path):
-                os.makedirs(self.checkpoint_path)
+
         # 多机训练的模型初始化
         if self.dist:
             print("init DDP")
@@ -201,7 +198,12 @@ class EXP_MAE_edit:
             if self.use_GPU:
                 self.model = self.model.cuda()
 
+        # 检查check_point 若不存在，则创建checkpoint 文件夹
+        if not self.dist or get_rank()==0:
+            if not os.path.exists(self.checkpoint_path):
+                os.makedirs(self.checkpoint_path)
 
+                
         self.build_dataprovider()
 
         self.build_optimizer(self.model)
