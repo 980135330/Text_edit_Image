@@ -49,7 +49,7 @@ class GeneratonPiplineDataSet(Dataset):
         # 对img 进行mask处理
         mask_patch = torch.rand(3,224,224)<0
         mask_patch[:,50:150,50:150]=True
-        img.masked_fill(self.mask_patch,-1)
+        img.masked_fill(mask_patch,-1)
 
         return text,img,img_gt
 
