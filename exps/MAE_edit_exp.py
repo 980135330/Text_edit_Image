@@ -177,9 +177,10 @@ class EXP_MAE_edit:
         # 先释放显存
         torch.cuda.empty_cache()
 
-
+        print("dist",self.dist)
         # 多机训练的模型初始化
         if self.dist:
+            print("init DDP")
             torch.distributed.init_process_group(backend='nccl')
             if torch.cuda.device_count() > 1:
                 print("Let's use", torch.cuda.device_count(), "GPUs!")
