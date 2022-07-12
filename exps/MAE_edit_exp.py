@@ -21,6 +21,7 @@ from torch.distributed import get_rank
 from torch.nn.parallel import DistributedDataParallel
 from utils import init_dist
 
+import ipdb
 
 def reduce_tenosr(tensor):
         tensor = tensor.clone()
@@ -77,7 +78,11 @@ class EXP_MAE_edit:
 
         # checkpoint 保存路径
         self.checkpoint_path = os.path.join(work_dir, "checkpoint")
-
+        # 若不存在，则创建checkpoint 文件夹
+        if not self.dist or get_rank()==0:
+            if not os.path.exists(self.checkpoint_path):
+                os.makedirs(self.checkpoint_path)
+        
         # 恢复训练的epoch，默认从1开始
         self.resume_epoch = 0
 
@@ -185,7 +190,10 @@ class EXP_MAE_edit:
             device = torch.device("cuda", local_rank)
             self.build_model()
             self.model = self.model.to(device)
-            self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
+
+            if not self.resume_from:
+                self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
+            
             print("current GPU",{local_rank},"\n")
 
         else:
@@ -220,6 +228,8 @@ class EXP_MAE_edit:
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             self.lr_scheduler.load_state_dict(checkpoint['warmup_scheduler'])
             self.resume_epoch = checkpoint['epoch'] 
+            if self.dist:
+                self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
 
             print("Resume_Epoch", self.resume_epoch)
 
@@ -255,6 +265,7 @@ class EXP_MAE_edit:
                 self.optimizer.step()
                 self.lr_scheduler.step()
                 
+                ipdb.set_trace()
 
 
                 end_time = time.time()
