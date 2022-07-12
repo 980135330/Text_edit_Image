@@ -214,7 +214,7 @@ class EXP_MAE_edit:
         self.build_loss()
 
         # 是否恢复训练，如果设置了恢复训练的选项，则初始化model、epoch、optimizer、lr_scheduler的状态
-        if self.resume_from is not None:
+        if self.resume_from:
     
             if not os.path.exists(self.resume_from):
                 raise FileNotFoundError("resume_from path not exists")
@@ -227,8 +227,8 @@ class EXP_MAE_edit:
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             self.lr_scheduler.load_state_dict(checkpoint['warmup_scheduler'])
             self.resume_epoch = checkpoint['epoch'] 
-            if self.dist:
-                self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
+            # if self.dist:
+            #     self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
 
             print("Resume_Epoch", self.resume_epoch)
 
