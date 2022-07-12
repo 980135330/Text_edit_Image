@@ -46,6 +46,11 @@ class GeneratonPiplineDataSet(Dataset):
             img = each(img)
             img_gt = each(img_gt)
 
+        # 对img 进行mask处理
+        mask_patch = torch.rand(3,224,224)<0
+        mask_patch[:,50:150,50:150]=True
+        img.masked_fill(self.mask_patch,-1)
+
         return text,img,img_gt
 
 # 不同的pipline操作，对数据进行预处理
