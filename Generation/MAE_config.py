@@ -6,7 +6,7 @@ use_wandb = False
 
 
 batch_size = 16
-epoch = 50
+epoch = 10
 mode = "train"
 # MAE transformer 设置
 img_size = 224
