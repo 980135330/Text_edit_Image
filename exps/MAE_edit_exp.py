@@ -44,7 +44,7 @@ class EXP_MAE_edit:
                  dist_cfg=None,
                  logger_cfg=None,
                  use_GPU=True,
-                 dist=False,
+                 dist=True,
 
                  resume_from = None,
                  init_model_from = None,
@@ -176,7 +176,7 @@ class EXP_MAE_edit:
         
         # 先释放显存
         torch.cuda.empty_cache()
-
+        print("*"*20)
         print("dist",self.dist)
         # 多机训练的模型初始化
         if self.dist:
