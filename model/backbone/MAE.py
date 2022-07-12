@@ -1,4 +1,5 @@
 from re import X
+from matplotlib.pyplot import xlabel
 import torch
 import torch.nn as nn
 from functools import partial
@@ -94,9 +95,15 @@ class MAE_decoder(nn.Module):
         image = image + self.pos_embed
 
         # 过block,kv都设置为image_gt
-    
+
+        # for block in self.blocks:
+        #     x = block(image,x)
+        
+
+        # 改用MAE测试模型,kv都变成image
+        x=image
         for block in self.blocks:
-            x = block(image,x)
+            x = block(x,x)       
        
         # 最后的norm
         x = self.norm(x)
@@ -224,7 +231,7 @@ class CrossAttention(nn.Module):
         v = self.to_v(v)
 
         # qk attn 操作,得到注意力矩阵
-        attn = (q@k.transpose(-2,-1))/self.scale
+        attn = (q@k.transpose(-2,-1))*self.scale
         # 对 attn 进行 softmax,这里不需要进行mask操作
         attn = attn.softmax(dim=-1)
 
