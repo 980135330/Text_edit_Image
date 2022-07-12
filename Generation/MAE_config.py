@@ -75,6 +75,7 @@ exp = dict(
                         type="MAE_decoder",
                         dim=embed_dim,
                         seq_len=seq_len,
+                        patch_size=patch_size,
                         num_heads=num_heads,
                         dim_head=dim_head,
                         depth=depth,
