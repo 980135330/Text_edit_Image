@@ -180,7 +180,9 @@ class EXP_MAE_edit:
 
         # 多机训练的模型初始化
         if self.dist:
+            print("*"*20)
             torch.distributed.init_process_group(backend='nccl')
+            print("finish init_process_group")
             if torch.cuda.device_count() > 1:
                 print("Let's use", torch.cuda.device_count(), "GPUs!")
 
