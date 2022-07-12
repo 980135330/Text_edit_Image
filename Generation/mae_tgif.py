@@ -63,9 +63,6 @@ if __name__ == '__main__':
                         help='experiment name')
 
     args = parser.parse_args()
-    # 通过 arg调整是否使用多卡训练
-    cfg.dist = args.dist
-                                
     exp = build_exps(cfg.exp)
     
     exp.run()
