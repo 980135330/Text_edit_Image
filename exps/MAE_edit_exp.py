@@ -176,6 +176,7 @@ class EXP_MAE_edit:
         
         # 先释放显存
         torch.cuda.empty_cache()
+        print("dist == ",self.dist)
 
 
         # 多机训练的模型初始化
@@ -229,8 +230,8 @@ class EXP_MAE_edit:
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             self.lr_scheduler.load_state_dict(checkpoint['warmup_scheduler'])
             self.resume_epoch = checkpoint['epoch'] 
-            # if self.dist:
-            #     self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
+            if self.dist:
+                self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
 
             print("Resume_Epoch", self.resume_epoch)
 
