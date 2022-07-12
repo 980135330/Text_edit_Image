@@ -17,6 +17,7 @@ dim_head=embed_dim//num_heads
 depth=24
 
 num_worker = 16
+
 seq_len=(img_size//patch_size)**2
 # lr和warmup_lr的比例
 lr = 1e-4
