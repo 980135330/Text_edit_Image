@@ -185,7 +185,7 @@ class EXP_MAE_edit:
             device = torch.device("cuda", local_rank)
             self.build_model()
             self.model = self.model.to(device)
-            self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank)
+            self.model = DistributedDataParallel(self.model,device_ids=[local_rank],output_device=local_rank,find_unused_parameters = True)
             print("current GPU",{local_rank},"\n")
 
         else:
