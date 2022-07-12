@@ -9,7 +9,6 @@ import torch.nn as nn
 from ..builder import BACKBONE
 
 import clip
-import ipdb
 # 使用MAE的decoder的思想，尝试利用cross attention 解决图片编辑问题
 @BACKBONE.register_module()
 class MAE_decoder(nn.Module):
@@ -59,7 +58,6 @@ class MAE_decoder(nn.Module):
         # 统一将维度投影到dim
         self.proj_text = nn.Linear(768, dim)
         # patch_size*patch_size*3 为一个patch 按 RGB通道的展开 
-        self.proj_image = nn.Linear(patch_size*patch_size*3, dim)
         self.proj_image = nn.Conv2d(in_channels,
                                     dim,
                                     kernel_size=patch_size,
@@ -93,8 +91,6 @@ class MAE_decoder(nn.Module):
         # transpose: [B, C, HW] -> [B, HW, C]
         image = image.flatten(2).transpose(1, 2)
         # 将位置编码加入输入，这里因为pos_embed第一维是1，所以会自动广播  
-        ipdb.set_trace()
-
         image = image + self.pos_embed
 
         # 过block,kv都设置为image_gt
