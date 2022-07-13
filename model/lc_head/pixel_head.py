@@ -18,7 +18,6 @@ class Pixel_head(nn.Module):
     def forward(self, x):
         B, N ,C = x.shape
         #重新将输出范围压缩到-1到1
-        x = self.act_layer(x)
         # 重新展开成图片
         # 试了很多次才得到的正确展开
         # 先取出c
