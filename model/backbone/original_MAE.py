@@ -91,7 +91,7 @@ class PretrainVisionTransformerDecoder(nn.Module):
         # 从seq_len中分解出长宽
         x = rearrange(x,"b c (h w) p ->b c h w  p ",h=self.img_size//self.patch_size,w=self.img_size//self.patch_size)
         # 最后展开为原图
-        x = rearrange(x,"c h w (p1 p2) -> c (h p1) (w p2)",p1=self.patch_size,p2=self.patch_size)
+        x = rearrange(x,"b c h w (p1 p2) ->b c (h p1) (w p2)",p1=self.patch_size,p2=self.patch_size)
 
 
         return x
