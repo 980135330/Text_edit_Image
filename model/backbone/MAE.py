@@ -87,8 +87,6 @@ class MAE_decoder(nn.Module):
         x = self.proj_text(x)
 
         # 对img进行patch处理变为token
-        ipdb.set_trace()
-
         image = self.proj_image(image)
 
         # flatten: [B, C, H, W] -> [B, C, HW]
@@ -101,19 +99,15 @@ class MAE_decoder(nn.Module):
 
         # for block in self.blocks:
         #     x = block(image,x)
-        ipdb.set_trace()
 
         # 改用MAE测试模型,kv都变成image
         x=image
-        
-        ipdb.set_trace()
+
         for block in self.blocks:
-            ipdb.set_trace()
             x = block(x,x)       
        
         # 最后的norm
         x = self.norm(x)
-        ipdb.set_trace()
         return x
 
 # 组合MLP 和 attention 为一个transformer block

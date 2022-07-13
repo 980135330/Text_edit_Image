@@ -21,6 +21,7 @@ from torch.distributed import get_rank
 from torch.nn.parallel import DistributedDataParallel
 from utils import init_dist
 
+import ipdb
 
 def reduce_tenosr(tensor):
         tensor = tensor.clone()
@@ -259,6 +260,7 @@ class EXP_MAE_edit:
 
                 self.optimizer.zero_grad()
                 self.model.train()
+                ipdb.set_trace()
 
                 output = self.model(text,image)
 
@@ -266,6 +268,9 @@ class EXP_MAE_edit:
                 loss.backward()
                 self.optimizer.step()
                 self.lr_scheduler.step()
+
+                ipdb.set_trace()
+
 
                 end_time = time.time()
                 if not self.dist or get_rank()==0:

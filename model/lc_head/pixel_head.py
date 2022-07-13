@@ -20,10 +20,6 @@ class Pixel_head(nn.Module):
         x = self.fc1(x)
         #重新将输出范围压缩到-1到1
         x = self.act_layer(x)
-
-        ipdb.set_trace()
-
-
         # 重新展开成图片
         x = x.view(B, 3, self.image_size, self.image_size)
 
