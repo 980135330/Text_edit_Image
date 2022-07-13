@@ -1,6 +1,6 @@
 import torch.nn as nn
 from ..builder import LC_HEAD
-
+import ipdb
 # MAE最后的分类头，接受transformer输出的token，将token重新变成像素展示
 @LC_HEAD.register_module()
 class Pixel_head(nn.Module):
@@ -20,6 +20,8 @@ class Pixel_head(nn.Module):
         x = self.fc1(x)
         #重新将输出范围压缩到-1到1
         x = self.act_layer(x)
+
+        ipdb.set_trace()
 
 
         # 重新展开成图片
