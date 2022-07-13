@@ -8,10 +8,10 @@ from einops import rearrange
 
 import torch
 import torch.nn as nn
-from ..builder import BACKBONE
+from ..builder import BACKBONE,MODEL
 
 # 直接使用MAE原生的decoder 
-@BACKBONE.register_module()
+@MODEL.register_module()
 class PretrainVisionTransformerDecoder(nn.Module):
     """ Vision Transformer with support for patch or hybrid CNN input stage
     """
