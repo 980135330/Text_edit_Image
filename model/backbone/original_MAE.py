@@ -78,6 +78,9 @@ class PretrainVisionTransformerDecoder(nn.Module):
             x = blk(x)
 
         x = self.head(self.norm(x)) # [B, N, 3*16^2]
+
+        x = rearrange('b n (c p) -> b c (n p)', c=3, p=self.patch_size**2)
+
         x = x.view(B,3,self.img_size,self.img_size)
 
         return x
