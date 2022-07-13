@@ -23,7 +23,7 @@ lr = 1e-4
 warm = 0.2
 
 # 是否使用多机训练
-dist = False
+dist = True
 
 # 恢复训练和模型初始化设置,如果不为None则读取模型
 #resume_from = work_dir + "checkpoint/epoch_3.pth"
