@@ -79,7 +79,7 @@ class MAE_decoder(nn.Module):
         b,n,d = text.shape
         #  先去掉中中间的维度,过clip抽取特征
         text = text.view(b,-1)
-        text = self.text_encoder(x)
+        text = self.text_encoder(text)
         # 恢复原本的形状，第二维增加维度，变为 bx1xd
         # 由于clip抽出的特征是float16,所以要先.float()转换成32位
         text = text.unsqueeze(1).float()
