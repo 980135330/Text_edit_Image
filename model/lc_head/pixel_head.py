@@ -22,6 +22,7 @@ class Pixel_head(nn.Module):
         # 重新展开成图片
         # 试了很多次才得到的正确展开
         # 先取出c
+        x= self.fc1(x)
         x = rearrange(x,'b n (c p) ->b c n p',c=3, p=self.patch_size**2)
         # 从seq_len中分解出长宽
         x = rearrange(x,"b c (h w) p ->b c h w  p ",h=self.image_size//self.patch_size,w=self.image_size//self.patch_size)
