@@ -10,6 +10,8 @@ import torch.nn as nn
 from ..builder import BACKBONE
 
 import clip
+
+import ipdb
 # 使用MAE的decoder的思想，尝试利用cross attention 解决图片编辑问题
 @BACKBONE.register_module()
 class MAE_decoder(nn.Module):
@@ -98,16 +100,17 @@ class MAE_decoder(nn.Module):
 
         # for block in self.blocks:
         #     x = block(image,x)
-        
+        ipdb.set_trace()
 
         # 改用MAE测试模型,kv都变成image
         x=image
         for block in self.blocks:
+            ipdb.set_trace()
             x = block(x,x)       
        
         # 最后的norm
         x = self.norm(x)
-
+        ipdb.set_trace()
         return x
 
 # 组合MLP 和 attention 为一个transformer block
