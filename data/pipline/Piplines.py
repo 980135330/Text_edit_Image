@@ -47,9 +47,9 @@ class GeneratonPiplineDataSet(Dataset):
             img_gt = each(img_gt)
 
         # 对img 进行mask处理
-        mask_patch = torch.rand(3,224,224)<0
-        mask_patch[:,50:150,50:150]=True
-        img = img.masked_fill(mask_patch,-1)
+        # mask_patch = torch.rand(3,224,224)<0
+        # mask_patch[:,50:150,50:150]=True
+        # img = img.masked_fill(mask_patch,-1)
 
         return text,img,img_gt
 
@@ -93,18 +93,6 @@ class Resize:
 
         return self.tf(data)
 
-@PIPLINE.register_module()
-class MAE_mask:
-
-    def __init__(self):
-        # 固定mask一部分中间区域作为实验
-        self.mask_patch = torch.rand(3,224,224)<0
-        self.mask_patch[:,50:150,50:150]=True
-     
-    def __call__(self,data):
-        # 直接mask区域变成-1，即变成黑色，看模型能不能恢复
-        data.masked_fill(self.mask_patch,-1)
-        return data
         
 
        

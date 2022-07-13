@@ -262,10 +262,10 @@ class EXP_MAE_edit:
                 self.model.train()
 
                 # 图文编辑模型
-                # output = self.model(text,image)
+                output = self.model(text,image)
 
                 # 纯mae模型，只传入图片
-                output = self.model(image)
+                # output = self.model(text,image)
 
                 loss = self.loss(output,image_gt)
                 loss.backward()

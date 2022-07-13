@@ -37,20 +37,21 @@ class TGIFDataSet(Dataset):
         gif = Image.open(gif_path)
         
         frames = ImageSequence.all_frames(gif)
-        
-        img = frames[0].convert("RGB")
-        
 
-        # 随机取帧
-        # gt_idx = np.random.randint(int(len(frames)*0.7),len(frames))
-        # img_gt = frames[gt_idx].convert("RGB")
+        # 随机取帧 组成一组训练数据对
+        img_idx = np.random.randint(0,int(len(frames)*0.3))
+        img = frames[img_idx].convert("RGB")
+        
+        
+        gt_idx = np.random.randint(int(len(frames)*0.7),len(frames))
+        img_gt = frames[gt_idx].convert("RGB")
 
         # 固定取最后一帧
         # img_gt = frames[-1].convert("RGB")
 
 
         # 尝试mae方式，测试模型能不能work
-        img_gt = frames[0].convert("RGB")
+        # img_gt = frames[0].convert("RGB")
 
 
 

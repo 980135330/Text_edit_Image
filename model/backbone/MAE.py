@@ -70,21 +70,21 @@ class MAE_decoder(nn.Module):
 
 
 
-    def forward(self, x, image):
+    def forward(self, text, image):
 
 
 
 
         # clip encoder 抽取文本特征
-        b,n,d = x.shape
+        b,n,d = text.shape
         #  先去掉中中间的维度,过clip抽取特征
-        x = x.view(b,-1)
-        x = self.text_encoder(x)
+        text = text.view(b,-1)
+        text = self.text_encoder(x)
         # 恢复原本的形状，第二维增加维度，变为 bx1xd
         # 由于clip抽出的特征是float16,所以要先.float()转换成32位
-        x = x.unsqueeze(1).float()
+        text = text.unsqueeze(1).float()
         # 统一投影到dim维度
-        x = self.proj_text(x)
+        text_features = self.proj_text(text)
 
         # 对img进行patch处理变为token
         image = self.proj_image(image)
@@ -101,10 +101,10 @@ class MAE_decoder(nn.Module):
         #     x = block(image,x)
 
         # 改用MAE测试模型,kv都变成image
-        x=image
+        # x=image
 
         for block in self.blocks:
-            x = block(x,x)       
+            x = block(image,text_features)       
        
         # 最后的norm
         x = self.norm(x)

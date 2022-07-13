@@ -6,7 +6,7 @@ import time
 import torch
 import torch.nn as nn
 import wandb
-import ori_mae_config as cfg
+import MAE_config as cfg
 sys.path.append("..")
 from exps  import build_exps
 
