@@ -6,13 +6,14 @@ import ipdb
 @LC_HEAD.register_module()
 class Pixel_head(nn.Module):
 
-    def __init__(self, in_channels=768, out_channels=768, image_size=224):
+    def __init__(self, in_channels=768, out_channels=768, image_size=224,patch_size=16):
         super(Pixel_head, self).__init__()
         self.fc1 = nn.Linear(in_channels, out_channels)
         self.fc2 = nn.Linear(out_channels, out_channels)
 
 
         self.image_size = image_size
+        self.patch_size = patch_size
 
 
     def forward(self, x):

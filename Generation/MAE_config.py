@@ -90,6 +90,7 @@ exp = dict(
                         in_channels=embed_dim,
                         out_channels=(patch_size**2)*3, 
                         image_size=img_size,
+                        patch_size=patch_size,
                     )),
     optimizer_cfg=dict(
         type="Adam",
