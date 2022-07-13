@@ -105,6 +105,8 @@ class MAE_decoder(nn.Module):
 
         # 改用MAE测试模型,kv都变成image
         x=image
+        
+        ipdb.set_trace()
         for block in self.blocks:
             ipdb.set_trace()
             x = block(x,x)       
