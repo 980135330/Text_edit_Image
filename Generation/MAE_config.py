@@ -13,7 +13,7 @@ embed_dim = 768
 patch_size = 16
 num_heads=16
 dim_head=embed_dim//num_heads
-depth=24
+depth=12
 
 num_worker = 16
 
