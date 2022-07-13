@@ -260,16 +260,18 @@ class EXP_MAE_edit:
 
                 self.optimizer.zero_grad()
                 self.model.train()
-                ipdb.set_trace()
 
-                output = self.model(text,image)
+                # 图文编辑模型
+                # output = self.model(text,image)
+
+                # 纯mae模型，只传入图片
+                output = self.model(image)
 
                 loss = self.loss(output,image_gt)
                 loss.backward()
                 self.optimizer.step()
                 self.lr_scheduler.step()
 
-                ipdb.set_trace()
 
 
                 end_time = time.time()
